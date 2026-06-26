@@ -1,4 +1,5 @@
 import mongoose, { Document, Model, Schema, Types } from 'mongoose';
+import { connectToDatabase } from './config/database';
 
 export interface IUser extends Document {
   name: string;
@@ -115,12 +116,7 @@ export const Activity: Model<IActivity> = mongoose.model<IActivity>('Activity', 
 export const LeaderboardEntry: Model<ILeaderboardEntry> = mongoose.model<ILeaderboardEntry>('LeaderboardEntry', leaderboardEntrySchema);
 export const Workout: Model<IWorkout> = mongoose.model<IWorkout>('Workout', workoutSchema);
 
-export const connectToDatabase = async () => {
-  mongoose.set('strictQuery', false);
-  const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/octofit_db';
-  await mongoose.connect(mongoUri);
-  return mongoUri;
-};
+export { connectToDatabase };
 
 export const seedDatabase = async () => {
   const existingUsers = await User.countDocuments();
