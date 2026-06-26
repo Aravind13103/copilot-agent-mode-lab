@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiUrl } from '../utils/api';
 
 function Leaderboard() {
   const [entries, setEntries] = useState([]);
@@ -9,7 +8,8 @@ function Leaderboard() {
   useEffect(() => {
     const loadLeaderboard = async () => {
       try {
-        const response = await fetch(getApiUrl('leaderboard'));
+        const apiUrl = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard`;
+        const response = await fetch(apiUrl);
         const data = await response.json();
         const payload = Array.isArray(data) ? data : data.results || [];
         setEntries(payload);

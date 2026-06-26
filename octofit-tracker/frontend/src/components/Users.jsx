@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiUrl } from '../utils/api';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -9,7 +8,8 @@ function Users() {
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const response = await fetch(getApiUrl('users'));
+        const apiUrl = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users`;
+        const response = await fetch(apiUrl);
         const data = await response.json();
         const payload = Array.isArray(data) ? data : data.results || [];
         setUsers(payload);
